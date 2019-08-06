@@ -19,6 +19,7 @@ let stayButton = document.getElementById('stay-button');
 let gameStarted = false,
     gameOver = false,
     playerWon = false,
+    tie = false;
     dealerCards = [],
     playerCards = [],
     deck = [],
@@ -33,11 +34,14 @@ newGameButton.addEventListener('click', function() {
   gameStarted = true;
   gameOver = false;
   playerWon = false;
+  tie = false;
   
   deck = createDeck();
   shuffleDeck(deck);
   dealerCards = [getNextCard(), getNextCard()];
   playerCards = [getNextCard(), getNextCard()];
+  
+  checkBlackJack();
   
   newGameButton.style.display = 'none';
   hitButton.style.display = 'inline';
@@ -130,11 +134,24 @@ function updateScores(){
   playerScore = getScore(playerCards);
 }
 
+function checkBlackJack(){
+  if(getScore(playerCards) === 21 && getScore(dealerCards) === 21) {
+    tie = true;
+    gameOver = true;
+  }  else if(getScore(playerCards) === 21){
+    playerWon = true;
+    gameOver = true;
+  } else if (getScore(dealerCards) === 21){
+    gameOver = true
+  }
+  checkForEndOfGame();
+}
+
 function checkForEndOfGame(){
   updateScores();
   
   if(gameOver){
-    while(dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21){
+    while(dealerScore < 17 && playerScore <= 21){
       dealerCards.push(getNextCard());
       updateScores();
     }
@@ -149,6 +166,8 @@ function checkForEndOfGame(){
   } else if (gameOver){
     if (playerScore > dealerScore){
       playerWon = true;
+    } else if(playerScore === dealerScore){
+      tie = true;
     } else {
       playerWon = false;
     }
@@ -173,18 +192,43 @@ function showStatus(){
   
   updateScores();
   
-  textArea.innerText =
-    'Dealer has:\n' +
-    dealerCardString +
-    '(score: ' + dealerScore + ')\n\n' +
+  if(dealerCards.length === 2 && !gameOver){
+    dealerCardString = '';
+    for(let i = 1; i < dealerCards.length; i++){
+      dealerCardString += getCardString(dealerCards[i]) + '\n';
+    }
     
-    'Player has:\n' +
-    playerCardString +
-    '(score: ' + playerScore + ')\n\n';
+    updateScores();
+    let dealerShowingScore = getScore(dealerCards) - 
+                              getCardNumericValue(dealerCards[0]) + 10;
+    if(dealerShowingScore > 21){
+      dealerShowingScore -= 11;
+    }
+
+    textArea.innerText =
+      'Dealer showing:\n' +
+      dealerCardString +
+      '(score: ' + dealerShowingScore + ')\n\n' +
     
+      'Player has:\n' +
+      playerCardString +
+      '(score: ' + playerScore + ')\n\n';
+  } else {
+    textArea.innerText =
+      'Dealer has:\n' +
+      dealerCardString +
+      '(score: ' + dealerScore + ')\n\n' +
+    
+      'Player has:\n' +
+      playerCardString +
+      '(score: ' + playerScore + ')\n\n';
+  }
+  
   if(gameOver){
     if(playerWon){
       textArea.innerText += "YOU WIN!";
+    } else if (tie){
+      textArea.innerText += "PUSH"
     } else {
       textArea.innerText += "DEALER WINS";
     }
