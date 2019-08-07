@@ -13,6 +13,7 @@ h1 {
     border: solid;
     border-image-repeat: round;
     padding-left: 5px;
+    text-align: center;
 }
 
 h4 {
@@ -21,6 +22,7 @@ h4 {
     border: solid;
     border-image-repeat: round;
     padding-left: 5px;
+    text-align: center;
 }
 
 p {
@@ -30,12 +32,13 @@ p {
     border: solid;
     border-image-repeat: round;
     padding-left: 5px;
+    text-align: center;
 }
 
 button {
     font-family: Impact, Charcoal, sans-serif;
     background-color: dimgrey;
-    color: red
+    color: red;
 }
 
 #hit-button{
