@@ -1,2 +1,49 @@
-/* Styles go here */
+body {
+    background-image: url("table.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: orangered;
+    padding-left: 40%;
+    font-family: Impact, Charcoal, sans-serif;
+}
 
+h1 {
+    background-image: linear-gradient(to right, black, gray);
+    width: 30%;
+    border: solid;
+    border-image-repeat: round;
+    padding-left: 5px;
+}
+
+h4 {
+    background-image: linear-gradient(to right, black, gray);
+    width: 30%;
+    border: solid;
+    border-image-repeat: round;
+    padding-left: 5px;
+}
+
+p {
+    background-image: linear-gradient(to right, black, gray);
+    font-size: x-large;
+    width: 30%;
+    border: solid;
+    border-image-repeat: round;
+    padding-left: 5px;
+}
+
+button {
+    font-family: Impact, Charcoal, sans-serif;
+    background-color: dimgrey;
+    color: red
+}
+
+#hit-button{
+    background-color: red;
+    color: black;
+}
+
+#stay-button {
+    background-color: lawngreen;
+    color: black;
+}
